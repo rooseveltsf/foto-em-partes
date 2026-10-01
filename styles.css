@@ -95,6 +95,7 @@ h1 { margin-bottom: 8px; font-size: clamp(1.7rem, 3.5vw, 2.45rem); line-height: 
 .print-tip p { margin: 0; }
 .print-tip strong { color: var(--ink); }
 .tip-icon { display: grid; place-items: center; flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; background: #dce7ff; color: var(--blue); font-family: Georgia, serif; font-weight: bold; }
+.site-footer { margin-top: 30px; color: #8b96a8; font-size: 0.8rem; text-align: center; }
 .toast { position: fixed; right: 22px; bottom: 22px; z-index: 2; max-width: min(360px, calc(100vw - 44px)); padding: 13px 16px; border-radius: 11px; background: #17243a; color: white; font-size: 0.87rem; opacity: 0; pointer-events: none; transform: translateY(12px); transition: 180ms ease; box-shadow: 0 12px 30px rgba(0,0,0,.2); }
 .toast.visible { opacity: 1; transform: translateY(0); }
 
@@ -129,6 +130,7 @@ h1 { margin-bottom: 8px; font-size: clamp(1.7rem, 3.5vw, 2.45rem); line-height: 
   .download-actions { width: 100%; flex-direction: column; }
   .download-button { width: 100%; min-height: 48px; }
   .print-tip { margin-top: 16px; font-size: 0.86rem; }
+  .site-footer { margin-top: 24px; font-size: 0.82rem; }
   .toast { right: 12px; bottom: 12px; max-width: calc(100vw - 24px); }
 }
 
