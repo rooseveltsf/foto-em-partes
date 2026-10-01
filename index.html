@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta
+      name="description"
+      content="Divida uma foto em partes para imprimir em várias folhas."
+    />
+    <title>Foto em Partes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <img class="brand-logo" src="assets/logo.png" alt="Foto em partes" />
+        <div class="hero-content">
+          <p class="eyebrow">DIVIDA, IMPRIMA E MONTE</p>
+          <h1>Monte sua foto em várias folhas</h1>
+          <p class="hero-copy">
+            Envie uma imagem, escolha as divisões e prepare tudo para imprimir.
+          </p>
+        </div>
+      </header>
+
+      <section class="workspace" aria-label="Divisor de imagem">
+        <div class="panel upload-panel">
+          <div class="panel-heading">
+            <span class="step">1</span>
+            <div>
+              <h2>Escolha uma foto</h2>
+              <p>Use JPG, PNG, WEBP ou GIF.</p>
+            </div>
+          </div>
+
+          <label class="dropzone" id="dropzone" for="imageInput">
+            <input id="imageInput" type="file" accept="image/jpeg,image/png,image/webp,image/gif" />
+            <span class="upload-icon" aria-hidden="true">↑</span>
+            <strong>Selecione ou arraste uma imagem</strong>
+            <span>O arquivo não sai do seu computador.</span>
+          </label>
+          <div class="file-status">
+            <p id="fileInfo" class="file-info" aria-live="polite">Nenhum arquivo selecionado</p>
+            <button id="clearImageButton" class="clear-image-button" type="button" disabled>Remover imagem</button>
+          </div>
+        </div>
+
+        <div class="panel settings-panel">
+          <div class="panel-heading">
+            <span class="step">2</span>
+            <div>
+              <h2>Defina as divisões</h2>
+              <p>Cada quadrado abaixo será um arquivo para imprimir.</p>
+            </div>
+          </div>
+
+          <div class="controls">
+            <label class="number-control">
+              <span>Linhas</span>
+              <div class="stepper">
+                <button type="button" class="stepper-button" data-target="rows" data-change="-1" aria-label="Diminuir linhas">−</button>
+                <input id="rows" type="number" min="1" max="12" value="2" inputmode="numeric" />
+                <button type="button" class="stepper-button" data-target="rows" data-change="1" aria-label="Aumentar linhas">+</button>
+              </div>
+            </label>
+
+            <span class="times" aria-hidden="true">×</span>
+
+            <label class="number-control">
+              <span>Colunas</span>
+              <div class="stepper">
+                <button type="button" class="stepper-button" data-target="cols" data-change="-1" aria-label="Diminuir colunas">−</button>
+                <input id="cols" type="number" min="1" max="12" value="2" inputmode="numeric" />
+                <button type="button" class="stepper-button" data-target="cols" data-change="1" aria-label="Aumentar colunas">+</button>
+              </div>
+            </label>
+          </div>
+
+          <div class="summary" aria-live="polite">
+            <strong id="totalParts">4 partes</strong>
+            <span id="tileEstimate">Envie uma imagem para ver o tamanho de cada parte.</span>
+          </div>
+
+          <label class="select-control" for="orientation">
+            <span>Orientação das folhas no PDF</span>
+            <select id="orientation">
+              <option value="auto">Automática</option>
+              <option value="portrait">Retrato (A4 em pé)</option>
+              <option value="landscape">Paisagem (A4 deitada)</option>
+            </select>
+            <small id="orientationInfo">A prévia mostrará a orientação escolhida.</small>
+          </label>
+        </div>
+
+        <div class="panel preview-panel">
+          <div class="panel-heading">
+            <span class="step">3</span>
+            <div>
+              <h2>Confira a divisão</h2>
+              <p>Cada quadro representa uma folha A4 e a posição da respectiva parte da foto.</p>
+            </div>
+          </div>
+
+          <div class="preview-stage empty" id="previewStage">
+            <div class="preview-placeholder" id="previewPlaceholder">
+              <span class="image-icon" aria-hidden="true">▧</span>
+              <span>A prévia aparecerá aqui</span>
+            </div>
+            <div id="previewPages" class="preview-pages" aria-label="Prévia das folhas do PDF" hidden></div>
+          </div>
+        </div>
+
+        <div class="panel download-panel">
+          <div>
+            <p class="eyebrow">PRONTO PARA IMPRIMIR</p>
+            <h2>Baixe as partes</h2>
+            <p>Baixe um ZIP com PNGs individuais ou um PDF A4 com uma parte em cada folha.</p>
+          </div>
+          <div class="download-actions">
+            <button id="downloadButton" class="download-button" type="button" disabled>
+              <span aria-hidden="true">↓</span>
+              Baixar ZIP
+            </button>
+            <button id="pdfButton" class="download-button pdf-button" type="button" disabled>
+              <span aria-hidden="true">↓</span>
+              Baixar PDF
+            </button>
+            <button id="printButton" class="download-button print-button" type="button" disabled>
+              <span aria-hidden="true">⎙</span>
+              Imprimir
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="print-tip" aria-label="Dica de impressão">
+        <span class="tip-icon" aria-hidden="true">i</span>
+        <p><strong>Dica:</strong> ao imprimir, use a mesma escala em todas as partes e mantenha a orientação da foto.</p>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
